@@ -7,7 +7,7 @@ from logging_config import setup_logging
 logger = logging.getLogger(__name__)
 setup_logging()
 
-def main():
+def main() -> None:
     """
     Create Kafka topics for the demo application.
     Topics are created with a prefix that can be specified as a command line argument.

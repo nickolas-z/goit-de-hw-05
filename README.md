@@ -50,7 +50,7 @@ python scripts/create_topic.py demo
 
 ![](./assets/create_topics.png)
 
-2. Симуляція серсора (продюсер) (one process == one sensor):
+2. Симуляція сенсора (продюсер) (one process == one sensor):
 
 ```bash
 python scripts/sensor_producer.py --prefix demo --interval 2.0

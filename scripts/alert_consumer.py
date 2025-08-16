@@ -1,3 +1,4 @@
+from typing import Any, Optional, Iterable
 import argparse, json, signal, threading, time, logging
 from kafka import KafkaConsumer
 from configs import kafka_config
@@ -7,7 +8,7 @@ _stop = threading.Event()
 from logging_config import setup_logging
 logger = logging.getLogger(__name__)
 
-def build_consumer(topics):
+def build_consumer(topics: Iterable[str]) -> Any:
     return KafkaConsumer(
         *topics,
         bootstrap_servers=kafka_config["bootstrap_servers"],
@@ -23,7 +24,7 @@ def build_consumer(topics):
     )
 
 
-def run_alert_consumer(prefix: str, stop_event: threading.Event | None = None):
+def run_alert_consumer(prefix: str, stop_event: threading.Event | None = None) -> None:
     """
     Run the alert consumer for temperature and humidity alerts.
     """
@@ -53,7 +54,7 @@ def run_alert_consumer(prefix: str, stop_event: threading.Event | None = None):
         logger.info("Alert consumer stopped.")
 
 
-def main():
+def main() -> None:
     """
     Main entry point for the alert consumer script.
     Parses command line arguments for prefix,
@@ -64,7 +65,7 @@ def main():
     ap.add_argument("--prefix", required=True)
     args = ap.parse_args()
 
-    def stop_signal(*_):
+    def stop_signal(*_: Any) -> None:
         logger.info("Stopping alert consumer...")
         _stop.set()
     signal.signal(signal.SIGINT, stop_signal)

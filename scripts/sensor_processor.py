@@ -1,3 +1,4 @@
+from typing import Any, Optional, Iterable
 import argparse, json, signal, threading, time, logging
 from kafka import KafkaConsumer, KafkaProducer
 from configs import kafka_config
@@ -7,7 +8,7 @@ _stop = threading.Event()
 from logging_config import setup_logging
 logger = logging.getLogger(__name__)
 
-def build_consumer(topic):
+def build_consumer(topic: str) -> Any:
     return KafkaConsumer(
         topic,
         bootstrap_servers=kafka_config["bootstrap_servers"],
@@ -22,7 +23,7 @@ def build_consumer(topic):
         consumer_timeout_ms=1000,
     )
 
-def build_producer():
+def build_producer() -> Any:
     from kafka import KafkaProducer
     return KafkaProducer(
         bootstrap_servers=kafka_config["bootstrap_servers"],
@@ -34,7 +35,7 @@ def build_producer():
     )
 
 
-def run_processor(prefix: str, temp_threshold: float = 40.0, hum_low: float = 20.0, hum_high: float = 80.0, stop_event: threading.Event | None = None):
+def run_processor(prefix: str, temp_threshold: float = 40.0, hum_low: float = 20.0, hum_high: float = 80.0, stop_event: threading.Event | None = None) -> None:
     """
     Run the sensor data processor. It listens to a Kafka topic for sensor data,
     checks temperature and humidity against thresholds, and sends alerts if thresholds are breached.
@@ -100,7 +101,7 @@ def run_processor(prefix: str, temp_threshold: float = 40.0, hum_low: float = 20
         logger.info("Processor stopped.")
 
 
-def main():
+def main() -> None:
     """
     Main entry point for the sensor processor script.
     Parses command line arguments for prefix and thresholds,
@@ -114,7 +115,7 @@ def main():
     ap.add_argument("--hum-high", type=float, default=80.0)
     args = ap.parse_args()
 
-    def stop_signal(*_):
+    def stop_signal(*_: Any) -> None:
         logger.info("Stopping processor...")
         _stop.set()
     signal.signal(signal.SIGINT, stop_signal)

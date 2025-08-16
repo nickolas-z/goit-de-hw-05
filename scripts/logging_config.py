@@ -1,10 +1,11 @@
+from typing import Any, Optional
 import logging
 import logging.handlers
 import os
 from datetime import datetime
 
 
-def setup_logging(level=logging.INFO, log_to_file=True, out_dir=None, suppress_console=False):
+def setup_logging(level: int = logging.INFO, log_to_file: bool = True, out_dir: Optional[str] = None, suppress_console: bool = False) -> logging.Logger:
     """
     Colored console logging plus optional file logging into `out/`.
     By default writes logs to `out/app-YYYYmmdd-HHMMSS.log` with rotation.
@@ -19,7 +20,7 @@ def setup_logging(level=logging.INFO, log_to_file=True, out_dir=None, suppress_c
         }
         RESET = '\x1b[0m'
 
-        def format(self, record):
+        def format(self, record: logging.LogRecord) -> str:
             levelname = record.levelname
             color = self.COLORS.get(levelname, '')
             record.levelname = f"{color}{levelname}{self.RESET}"

@@ -2,7 +2,7 @@
 from __future__ import annotations
 import argparse, json, threading, signal, time
 from collections import deque
-from typing import Deque, Dict, Any, Set
+from typing import Optional, Iterable, Any, Deque, Dict, Any, Set
 from kafka import KafkaConsumer
 from configs import kafka_config
 from logging_config import setup_logging
@@ -21,7 +21,7 @@ from rich.text import Text
 
 _stop = threading.Event()
 
-def build_consumer(topics):
+def build_consumer(topics: Iterable[str]) -> Any:
     return KafkaConsumer(
         *topics,
         bootstrap_servers=kafka_config["bootstrap_servers"],
@@ -49,7 +49,7 @@ def layout_template() -> Layout:
     )
     return layout
 
-def make_table(title: str, rows: Deque[Dict[str, Any]], columns, highlight_map=None) -> Table:
+def make_table(title: str, rows: Deque[Dict[str, Any]], columns: Iterable[str], highlight_map: Optional[Any] = None) -> Table:
     tbl = Table(title=title, box=box.SIMPLE_HEAVY, expand=True, show_edge=True)
     for col in columns:
         if col == 'ts':
@@ -81,7 +81,7 @@ def make_table(title: str, rows: Deque[Dict[str, Any]], columns, highlight_map=N
         tbl.add_row(*row_cells)
     return tbl
 
-def dashboard(prefix: str, max_rows: int):
+def dashboard(prefix: str, max_rows: int) -> None:
     sensors_topic = f"{prefix}_building_sensors"
     temp_topic = f"{prefix}_temperature_alerts"
     hum_topic = f"{prefix}_humidity_alerts"
@@ -97,10 +97,10 @@ def dashboard(prefix: str, max_rows: int):
     }
     sensors_set: Set[int] = set()
 
-    cons_raw = build_consumer([sensors_topic])
-    cons_alerts = build_consumer([temp_topic, hum_topic])
+    cons_raw: Any = build_consumer([sensors_topic])
+    cons_alerts: Any = build_consumer([temp_topic, hum_topic])
 
-    def consume_raw():
+    def consume_raw() -> None:
         while not _stop.is_set():
             try:
                 for msg in cons_raw:
@@ -119,7 +119,7 @@ def dashboard(prefix: str, max_rows: int):
             except Exception:
                 time.sleep(0.5)
 
-    def consume_alerts():
+    def consume_alerts() -> None:
         while not _stop.is_set():
             try:
                 for msg in cons_alerts:
@@ -150,7 +150,7 @@ def dashboard(prefix: str, max_rows: int):
     lay = layout_template()
 
     # start a key-watcher thread that sets _stop when user presses "q"
-    def key_watcher():
+    def key_watcher() -> None:
         import sys, termios, tty, select
         fd = sys.stdin.fileno()
         try:
@@ -175,7 +175,7 @@ def dashboard(prefix: str, max_rows: int):
     tk = threading.Thread(target=key_watcher, daemon=True)
     tk.start()
 
-    def render():
+    def render() -> Layout:
         now = time.strftime('%Y-%m-%d %H:%M:%S')
         header_text = Text.assemble(
             (f"prefix={prefix}  ", "bold white"),
@@ -224,7 +224,7 @@ def dashboard(prefix: str, max_rows: int):
     cons_raw.close()
     cons_alerts.close()
 
-def main():
+def main() -> None:
     """
     Rich dashboard:
         - Left column: last N (default 15) raw sensor readings
@@ -243,7 +243,7 @@ def main():
     ap.add_argument("--start-alerts", action="store_true", help="Start a local alert consumer thread")
     args = ap.parse_args()
 
-    def stop_sig(*_):
+    def stop_sig(*_: Any) -> None:
         _stop.set()
     signal.signal(signal.SIGINT, stop_sig)
     signal.signal(signal.SIGTERM, stop_sig)

@@ -1,3 +1,4 @@
+from typing import Any, Optional, Iterable
 import argparse, random, json, signal, threading, time, logging
 from datetime import datetime, timezone
 from kafka import KafkaProducer
@@ -8,10 +9,10 @@ _stop = threading.Event()
 from logging_config import setup_logging
 logger = logging.getLogger(__name__)
 
-def iso_now():
+def iso_now() -> str:
     return datetime.now(timezone.utc).isoformat(timespec="milliseconds")
 
-def build_producer():
+def build_producer() -> Any:
     return KafkaProducer(
         bootstrap_servers=kafka_config["bootstrap_servers"],
         security_protocol=kafka_config["security_protocol"],
@@ -22,7 +23,7 @@ def build_producer():
     )
 
 
-def run_producer(prefix: str, sensor_id: int | None = None, interval: float = 2.0, count: int = 0, stop_event: threading.Event | None = None):
+def run_producer(prefix: str, sensor_id: int | None = None, interval: float = 2.0, count: int = 0, stop_event: threading.Event | None = None) -> None:
     """
     Run the producer loop. If stop_event is provided it will be used to stop the loop.
     This can be called from another thread.
@@ -61,7 +62,7 @@ def run_producer(prefix: str, sensor_id: int | None = None, interval: float = 2.
         logger.info("Producer closed.")
 
 
-def main():
+def main() -> None:
     """
     Main entry point for the sensor producer script.
     Parses command line arguments for prefix, sensor_id, interval, and count,
@@ -75,7 +76,7 @@ def main():
     ap.add_argument("--count", type=int, default=0, help="If >0 send N messages then exit")
     args = ap.parse_args()
 
-    def stop_signal(*_):
+    def stop_signal(*_: Any) -> None:
         logger.info("Stopping sensor...")
         _stop.set()
     signal.signal(signal.SIGINT, stop_signal)
