@@ -39,8 +39,57 @@
 5. Отримання даних з `temperature_alerts` і `humidity_alerts` та виведення на екран (15 балів).
 
 ### Результат
-### Вихідний код
 
+1. Створення топіків:
+
+```bash
+python scripts/create_topic.py demo
+```
+- [create_topic.py](./scripts/create_topic.py)
+- [app-20250816-170100.log](./out/app-20250816-170100.log)
+
+![](./assets/create_topics.png)
+
+2. Симуляція серсора (продюсер) (one process == one sensor):
+
+```bash
+python scripts/sensor_producer.py --prefix demo --interval 2.0
+```
+- [sensor_producer.py](./scripts/sensor_producer.py)
+- [app-20250816-170356.log](./out/app-20250816-170356.log)
+![](./assets/sensor_producer.png)
+
+3. Обробка (reads building_sensors and emits alerts):
+
+```bash
+python scripts/sensor_processor.py --prefix demo
+```
+- [sensor_processor.py](./scripts/sensor_processor.py)
+- [app-20250816-170555.log](./out/app-20250816-170555.log)
+![](./assets/sensor_processor.png)
+
+4. Відправка фільрованих даних (prints alerts):
+
+```bash
+python scripts/alert_consumer.py --prefix demo
+```
+- [alert_consumer.py](./scripts/alert_consumer.py)
+- [app-20250816-171011.log](./out/app-20250816-171011.log)
+![](./assets/alert_consumer.png)
+
+5. Запуск dashboard (демонстрація роботи системи):
+
+```bash
+python scripts/dashboard.py --prefix demo --start-producer --start-processor --start-alerts
+```
+- [dashboard.py](./scripts/dashboard.py)
+- [app-20250816-171227.log](./out/app-20250816-171227.log)
+![](./assets/dashboard.png)
+
+### Вихідний код
+- [Scripts](./scripts/)
+- [Logs](./out/)
 
 ### Репозиторій
-[goit-de-hw-04](https://github.com/nickolas-z/goit-de-hw-04)
+[goit-de-hw-05](https://github.com/nickolas-z/goit-de-hw-05)
+

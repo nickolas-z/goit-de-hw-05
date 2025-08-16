@@ -1,0 +1,16 @@
+2025-08-16 17:03:56,173 [33mWARNING[0m Sending username and password in the clear
+2025-08-16 17:03:56,173 [32mINFO[0m <BrokerConnection client_id=kafka-python-producer-1, node_id=bootstrap-0 host=77.81.230.104:9092 <connecting> [IPv4 ('77.81.230.104', 9092)]>: connecting to 77.81.230.104:9092 [('77.81.230.104', 9092) IPv4]
+2025-08-16 17:03:56,328 [32mINFO[0m <BrokerConnection client_id=kafka-python-producer-1, node_id=bootstrap-0 host=77.81.230.104:9092 <checking_api_versions_recv> [IPv4 ('77.81.230.104', 9092)]>: Broker version identified as 2.6
+2025-08-16 17:03:56,430 [32mINFO[0m <BrokerConnection client_id=kafka-python-producer-1, node_id=bootstrap-0 host=77.81.230.104:9092 <authenticating> [IPv4 ('77.81.230.104', 9092)]>: Authenticated as admin via SASL / Plain
+2025-08-16 17:03:56,431 [32mINFO[0m <BrokerConnection client_id=kafka-python-producer-1, node_id=bootstrap-0 host=77.81.230.104:9092 <connected> [IPv4 ('77.81.230.104', 9092)]>: Connection complete.
+2025-08-16 17:03:56,441 [32mINFO[0m Sensor started id=6847 topic=demo_building_sensors
+2025-08-16 17:03:56,593 [33mWARNING[0m Sending username and password in the clear
+2025-08-16 17:03:56,594 [32mINFO[0m <BrokerConnection client_id=kafka-python-producer-1, node_id=1001 host=77.81.230.104:9092 <connecting> [IPv4 ('77.81.230.104', 9092)]>: connecting to 77.81.230.104:9092 [('77.81.230.104', 9092) IPv4]
+2025-08-16 17:03:56,737 [32mINFO[0m <BrokerConnection client_id=kafka-python-producer-1, node_id=1001 host=77.81.230.104:9092 <authenticating> [IPv4 ('77.81.230.104', 9092)]>: Authenticated as admin via SASL / Plain
+2025-08-16 17:03:56,737 [32mINFO[0m <BrokerConnection client_id=kafka-python-producer-1, node_id=1001 host=77.81.230.104:9092 <connected> [IPv4 ('77.81.230.104', 9092)]>: Connection complete.
+2025-08-16 17:03:56,737 [32mINFO[0m <BrokerConnection client_id=kafka-python-producer-1, node_id=bootstrap-0 host=77.81.230.104:9092 <connected> [IPv4 ('77.81.230.104', 9092)]>: Closing connection. 
+2025-08-16 17:03:56,737 [33mWARNING[0m Sending username and password in the clear
+2025-08-16 17:05:38,576 [32mINFO[0m Stopping sensor...
+2025-08-16 17:05:38,576 [32mINFO[0m <KafkaProducer client_id=kafka-python-producer-1 transactional_id=None>: Closing the Kafka producer with 9223372036.0 secs timeout.
+2025-08-16 17:05:38,577 [32mINFO[0m <BrokerConnection client_id=kafka-python-producer-1, node_id=1001 host=77.81.230.104:9092 <connected> [IPv4 ('77.81.230.104', 9092)]>: Closing connection. 
+2025-08-16 17:05:38,577 [33mWARNING[0m Sending username and password in the clear
