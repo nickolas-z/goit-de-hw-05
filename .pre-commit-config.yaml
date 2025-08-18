@@ -3,7 +3,7 @@ repos:
     hooks:
       - id: mypy-local
         name: mypy
-        # run mypy only on the scripts package to avoid duplicate-module mapping issues
         entry: python -m mypy --config-file mypy.ini --explicit-package-bases scripts
         language: system
         types: [python]
+        pass_filenames: false
